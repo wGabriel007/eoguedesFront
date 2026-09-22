@@ -1,0 +1,14 @@
+{
+  "name": "EoGuedes · site oficial",
+  "short_name": "EoGuedes",
+  "description": "Brega funk direto do Caetés 1, Abreu e Lima.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0b0f",
+  "theme_color": "#0b0b0f",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "/icone-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

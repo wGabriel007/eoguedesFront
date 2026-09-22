@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR" data-tema="paredao" data-fonte="impacto">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>EoGuedes: site oficial | Brega funk do Caetés 1</title>
+    <meta name="description" content="Site oficial de EoGuedes: agenda de shows, músicas, clipes e contratação. Brega funk direto do Caetés 1, Abreu e Lima, pro palco." />
+    <meta name="theme-color" content="#0b0b0f" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!--
+      Open Graph: é o que aparece quando alguém cola o link no WhatsApp/Instagram/Facebook.
+      Essas plataformas NÃO executam JavaScript, então as tags precisam estar aqui no HTML.
+      Quando publicar, troque https://www.eoguedes.com.br pelo domínio real.
+    -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="EoGuedes" />
+    <meta property="og:title" content="EoGuedes: site oficial" />
+    <meta property="og:description" content="Brega funk direto do Caetés 1, Abreu e Lima. Agenda de shows, músicas, clipes e contratação." />
+    <meta property="og:url" content="https://www.eoguedes.com.br/" />
+    <meta property="og:image" content="https://www.eoguedes.com.br/og-imagem.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://www.eoguedes.com.br/" />
+
+    <!--
+      Os dados do topo do site começam a baixar junto com o JavaScript (não depois dele).
+      Vale quando front e API estão no mesmo domínio (Nginx/proxy), que é o padrão deste projeto.
+    -->
+    <link rel="preload" href="/api/artista" as="fetch" crossorigin="anonymous" />
+    <link rel="preload" href="/api/lancamentos" as="fetch" crossorigin="anonymous" />
+    <link rel="preload" href="/api/shows?periodo=proximos" as="fetch" crossorigin="anonymous" />
+
+    <style>
+      /* Tela de carregamento sem esperar o JS: fundo escuro já no primeiro frame */
+      html, body { background: #0b0b0f; }
+    </style>
+  </head>
+  <body>
+    <!--
+      APP SHELL: um "hero" estático que aparece no primeiro frame, antes do JavaScript.
+      O React substitui tudo isso quando carrega (em ~1s). Deixa o site com cara de
+      rápido no 4G e melhora muito a nota de performance (LCP).
+    -->
+    <div id="root"><section style="min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at top,#2a0f22,#0b0b0f 70%);color:#fff;text-align:center;padding:0 16px;overflow:hidden">
+      <p style="margin:0 0 16px;font:600 12px/1 Inter,system-ui,sans-serif;letter-spacing:.4em;text-transform:uppercase;color:#c6ff00">Brega funk · Caetés 1 · Abreu e Lima</p>
+      <h1 style="margin:0;font-family:Anton,Impact,'Arial Narrow',sans-serif;font-weight:400;text-transform:uppercase;line-height:.82;white-space:nowrap;font-size:clamp(3rem,15.625vw,15rem)">EoGuedes</h1>
+    </section></div>
+    <noscript>
+      <div style="font-family:system-ui;color:#fff;padding:2rem;text-align:center">
+        <h1>EoGuedes</h1><p>Ative o JavaScript para ver o site completo.</p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

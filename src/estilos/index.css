@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+/*
+  TOKENS DE TEMA (Tailwind v4)
+  Cada cor vira uma classe: bg-fundo, text-primaria, border-secundaria...
+  Os valores abaixo são o tema padrão ("paredao"). Os blocos [data-tema]
+  só trocam as variáveis: para mudar a cara do site inteiro basta mudar
+  o atributo data-tema no <html> (o painel faz isso em "Artista e aparência").
+*/
+@theme {
+  --color-fundo: #0b0b0f;
+  --color-superficie: #16161d;
+  --color-texto: #f5f3ee;
+  --color-texto-suave: #a8a6b3;
+  --color-primaria: #ff2d95;
+  --color-secundaria: #c6ff00;
+  --color-sobre-primaria: #0b0b0f;
+  --color-sobre-secundaria: #0b0b0f;
+  --color-claro: #f2efe8;       /* seções claras (agenda, clipes) */
+  --color-sobre-claro: #111111;
+
+  --font-display: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --font-corpo: "Inter", system-ui, sans-serif;
+
+  --ease-palco: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee-reverso: marquee 30s linear infinite reverse;
+  --animate-grao: grao 0.9s steps(6) infinite;
+  --animate-holofote: holofote 9s ease-in-out infinite alternate;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes grao {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-3%, 2%); }
+    40% { transform: translate(2%, -3%); }
+    60% { transform: translate(-2%, -1%); }
+    80% { transform: translate(3%, 3%); }
+    100% { transform: translate(0, 0); }
+  }
+  @keyframes holofote {
+    0% { --hx: 20%; --hy: 30%; }
+    50% { --hx: 75%; --hy: 45%; }
+    100% { --hx: 40%; --hy: 70%; }
+  }
+}
+
+/* Variáveis animáveis do holofote (registradas para poderem ter transição). */
+@property --hx { syntax: "<percentage>"; inherits: true; initial-value: 50%; }
+@property --hy { syntax: "<percentage>"; inherits: true; initial-value: 40%; }
+
+/* Paleta 1: PAREDÃO (preto de festa, magenta neon e verde-limão) */
+[data-tema="paredao"] {
+  --color-fundo: #0b0b0f;
+  --color-superficie: #16161d;
+  --color-texto: #f5f3ee;
+  --color-texto-suave: #a8a6b3;
+  --color-primaria: #ff2d95;
+  --color-secundaria: #c6ff00;
+  --color-sobre-primaria: #0b0b0f;
+  --color-sobre-secundaria: #0b0b0f;
+  --color-claro: #f2efe8;
+  --color-sobre-claro: #111111;
+}
+
+/* Paleta 2: RECIFE NOTURNO (azul-noite, laranja de pôr do sol e ciano) */
+[data-tema="recife-noturno"] {
+  --color-fundo: #0a1033;
+  --color-superficie: #141b4d;
+  --color-texto: #f4f1ff;
+  --color-texto-suave: #aab0d6;
+  --color-primaria: #ff7a1a;
+  --color-secundaria: #22d3ee;
+  --color-sobre-primaria: #0a1033;
+  --color-sobre-secundaria: #0a1033;
+  --color-claro: #fdf3e7;
+  --color-sobre-claro: #0a1033;
+}
+
+/* Paleta 3: LAMBE-LAMBE (papel de cartaz, vermelho, amarelo e preto) */
+[data-tema="lambe-lambe"] {
+  --color-fundo: #111111;
+  --color-superficie: #1d1b18;
+  --color-texto: #f2ede3;
+  --color-texto-suave: #b7ae9e;
+  --color-primaria: #e3262e;
+  --color-secundaria: #ffd400;
+  --color-sobre-primaria: #ffffff;
+  --color-sobre-secundaria: #111111;
+  --color-claro: #f2ede3;
+  --color-sobre-claro: #111111;
+}
+
+/* Par de fontes 1: IMPACTO (Anton + Inter) */
+[data-fonte="impacto"] {
+  --font-display: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --font-corpo: "Inter", system-ui, sans-serif;
+}
+
+/* Par de fontes 2: LETREIRO (Bebas Neue + Manrope) */
+[data-fonte="letreiro"] {
+  --font-display: "Bebas Neue", "Impact", "Arial Narrow", sans-serif;
+  --font-corpo: "Manrope", system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 5rem; /* compensa o menu fixo ao clicar nas âncoras */
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-fundo text-texto font-corpo antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3 {
+    @apply font-display uppercase;
+    letter-spacing: 0.01em;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-secundaria;
+  }
+  ::selection {
+    @apply bg-primaria text-sobre-primaria;
+  }
+  /* Lenis (scroll suave) */
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-stopped { overflow: hidden; }
+}
+
+@layer components {
+  /* Texto só com contorno: anos da linha do tempo, números gigantes */
+  .texto-contorno {
+    color: transparent;
+    -webkit-text-stroke: 2px currentColor;
+  }
+  .texto-contorno-fino {
+    color: transparent;
+    -webkit-text-stroke: 1px currentColor;
+  }
+
+  /* Grão de filme por cima do hero (SVG de ruído embutido, sem arquivo extra) */
+  .grao::after {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    pointer-events: none;
+    opacity: 0.12;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: var(--animate-grao);
+    mix-blend-mode: overlay;
+  }
+
+  /* Holofote: gradiente radial que segue o cursor (--hx/--hy vêm do JS) */
+  .holofote {
+    background: radial-gradient(
+      circle at var(--hx) var(--hy),
+      color-mix(in oklab, var(--color-primaria) 45%, transparent) 0%,
+      color-mix(in oklab, var(--color-primaria) 12%, transparent) 18%,
+      transparent 42%
+    );
+    mix-blend-mode: screen;
+    transition: --hx 0.35s var(--ease-palco), --hy 0.35s var(--ease-palco);
+  }
+  .holofote-auto { animation: var(--animate-holofote); }
+
+  /* Parede de tijolo para o mural de lambe-lambe */
+  .parede {
+    background-color: color-mix(in oklab, var(--color-superficie) 85%, #5a3b2e);
+    background-image:
+      linear-gradient(0deg, rgb(0 0 0 / 0.35) 2px, transparent 2px),
+      linear-gradient(90deg, rgb(0 0 0 / 0.35) 2px, transparent 2px),
+      linear-gradient(90deg, rgb(0 0 0 / 0.35) 2px, transparent 2px);
+    background-size: 100% 48px, 120px 96px, 120px 96px;
+    background-position: 0 0, 0 0, 60px 48px;
+  }
+
+  /* Cartão "post-it" / lambe-lambe */
+  .lambe {
+    box-shadow: 0 1px 0 rgb(0 0 0 / 0.1), 0 12px 24px -8px rgb(0 0 0 / 0.55);
+    background-image: linear-gradient(170deg, rgb(255 255 255 / 0.25), transparent 40%);
+  }
+
+  .campo {
+    @apply w-full rounded-xl border border-current/20 bg-transparent px-4 py-3 text-base outline-none transition placeholder:opacity-50 focus:border-primaria focus:ring-2 focus:ring-primaria/30;
+  }
+  .campo-erro { @apply border-red-500 focus:border-red-500 focus:ring-red-500/30; }
+  .rotulo { @apply mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] opacity-80; }
+
+}
+
+/* Botões: @utility permite reaproveitar um no outro com @apply. */
+@utility botao {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold uppercase tracking-wider transition duration-300 disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility botao-primario { @apply botao bg-primaria text-sobre-primaria hover:brightness-110; }
+@utility botao-secundario { @apply botao bg-secundaria text-sobre-secundaria hover:brightness-110; }
+@utility botao-contorno { @apply botao border-2 border-current hover:bg-current/10; }
+
+@utility sem-barra {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+/* Acessibilidade: quem pede menos movimento não recebe animação. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Cursor personalizado: esconde a seta do sistema só onde o círculo aparece. */
+.cursor-personalizado, .cursor-personalizado * { cursor: none; }
+.cursor-personalizado :is(input, textarea, select) { cursor: auto; }

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+
+# Troque pelo domínio real quando publicar:
+Sitemap: https://www.eoguedes.com.br/sitemap.xml
